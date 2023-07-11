@@ -1,6 +1,4 @@
-// @ts-expect-error satori/wasm is not typed
 import satori, { init } from "satori/wasm";
-// @ts-expect-error yoga-wasm-web is not typed
 import initYoga from "yoga-wasm-web";
 import { Resvg, initWasm } from "@resvg/resvg-wasm";
 import { parseHtml } from "./parseHtml";
@@ -16,7 +14,7 @@ const initResvgWasm = async () => {
   try {
     await initWasm(resvgWasm as WebAssembly.Module);
   } catch (err) {
-    // console.error(err);
+    console.error(err);
   }
 };
 
