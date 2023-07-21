@@ -1,1 +1,1 @@
-export { ImageResponse } from "./og";
+export { ImageResponse, og } from "./og";

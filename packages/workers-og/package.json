@@ -13,7 +13,7 @@
     }
   },
   "types": "./dist/index.d.ts",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230710.0",
     "@types/node": "^18.8.4",
