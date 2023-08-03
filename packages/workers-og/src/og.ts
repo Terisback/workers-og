@@ -1,9 +1,8 @@
 import satori, { init } from "satori/wasm";
 import initYoga from "yoga-wasm-web";
 import { Resvg, initWasm } from "@resvg/resvg-wasm";
-import { parseHtml } from "./parseHtml";
 import { loadGoogleFont } from "./font";
-import type { ImageResponseOptions, ReactElementLike } from "./types";
+import type { ImageResponseOptions } from "./types";
 
 // @ts-expect-error .wasm files are not typed
 import yogaWasm from "../vendors/yoga.wasm";
@@ -31,29 +30,26 @@ export const og = async ({
   element,
   options,
 }: {
-  element: string | ReactElementLike;
+  element: React.ReactNode;
   options: ImageResponseOptions;
 }) => {
   // Init wasms
   await Promise.allSettled([initResvgWasm(), initYogaWasm()]);
 
-  const reactElement =
-    typeof element === "string" ? await parseHtml(element) : element;
-
   // render the React element-like object into an SVG
-  const svg = await satori(reactElement, {
+  const svg = await satori(element, {
     width: options.width || 1200,
     height: options.height || 630,
     fonts: !!options.fonts?.length
       ? options.fonts
       : [
-          {
-            name: "Bitter",
-            data: await loadGoogleFont({ family: "Bitter", weight: 600 }),
-            weight: 500,
-            style: "normal",
-          },
-        ],
+        {
+          name: "Bitter",
+          data: await loadGoogleFont({ family: "Bitter", weight: 600 }),
+          weight: 500,
+          style: "normal",
+        },
+      ],
   });
 
   const requestedFormat = options.format || "png";
@@ -69,9 +65,9 @@ export const og = async ({
       mode: "width" as const,
       value: options.width || 1200,
     },
-    font: {
-      loadSystemFonts: false, // It will be faster to disable loading system fonts.
-    },
+    // font: {
+    // loadSystemFonts: false, // It will be faster to disable loading system fonts.
+    // },
   };
   const resvg = new Resvg(svg, opts);
   const pngData = resvg.render();
@@ -82,7 +78,7 @@ export const og = async ({
 
 export class ImageResponse extends Response {
   constructor(
-    element: string | ReactElementLike,
+    element: React.ReactNode,
     options: ImageResponseOptions = {}
   ) {
     super();
