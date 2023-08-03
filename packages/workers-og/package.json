@@ -1,5 +1,5 @@
 {
-  "name": "@skorfmann/workers-og",
+  "name": "@terisback/workers-og",
   "type": "module",
   "files": [
     "dist"
